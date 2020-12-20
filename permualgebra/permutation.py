@@ -1,5 +1,4 @@
 import sys
-from copy import copy
 from .cycle import Cycle
 
 class Permutation:
@@ -19,9 +18,13 @@ class Permutation:
                 self.setmax = currMax
 
     def getSimplify(self):
-        S = self.getSet()   # set of preimage, i.e. domain; work as a queue
-        res = Permutation()           # format: [1, 2, 3, "B", 8, 6] -> (1 2 3)(8 6)
-        while S:    # while S is not empty    
+        """
+        Theorem. Every permutation on S = {1, ..., n} can be written as a product of **disjoint cycles**.
+        i.e. no element of S repented in the cycle description.
+        """
+        S = self.getSet()       # set of preimage, i.e. domain; work as a queue
+        res = Permutation()     # the result permutation in product of disjoint cycles
+        while S:                # while S is not empty, keep goinf
             currElement = S.pop(0)  # front of queue
             currRes = [currElement]
             while True:
@@ -38,9 +41,36 @@ class Permutation:
 
         # finished calculating the result
         return res
-            
+ 
+    def TeX(self, type="math") -> str:
+        """
+        Give the TeX(LaTeX) format in three ways:
+            1. text
+                $$ \text{(1 2 3)(4 5 6)} $$
+                can be inserted into a math environment.
+            2. math
+                $$ (1\:2\:3)(4\:5\:6) $$
+                can be inserted into a math environment without using \text{}
+            3. normal
+                (1 2 3)
+                if inserted into math environment, there will be no space inbetween.
+        """
+        TeX = ""
+        if type == "text":
+            return "\\text{" + str(self) + "}"
+        elif type == "math":
+            for cycle in self.cycles:
+                TeX += cycle.TeX(type="math")
+        else:
+            TeX = str(self)
+        return TeX
 
     def append(self, newCycle):
+        """
+        append a new cycle into this permutation,
+        input: newCycle -> str
+            or newCycle -> Cycle()
+        """
         if type(newCycle) is str:
             newCycle = Cycle(newCycle)
         self.cycles.append(newCycle)

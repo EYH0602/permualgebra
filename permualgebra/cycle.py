@@ -52,6 +52,25 @@ class Cycle:
     def getHighest(self) -> int:
         return max(self.elements)
 
+    def TeX(self, type = "math") -> str:
+        if len(self) == 0 or len(self) == 1:
+            return ""
+
+        TeX = ""
+        if type == "text":
+            TeX = "\\text{" + str(self) + "}"
+        elif type == "math":
+            TeX = "("
+            for element in self.elements:
+                TeX += str(element) + "\:"
+            TeX = TeX[:-2]
+            TeX += ")"
+        else:
+            TeX = str(self)
+
+        return TeX
+
+
     def __str__(self) -> str:
         if len(self) == 0 or len(self) == 1:
             return ""
