@@ -49,8 +49,11 @@ class Cycle:
         self.elements.append(newElement)
         return True
 
+    def getHighest(self) -> int:
+        return max(self.elements)
+
     def __str__(self) -> str:
-        if len(self) == 0:
+        if len(self) == 0 or len(self) == 1:
             return ""
 
         # otherwise give the cyclic notation of this Cycle
@@ -66,5 +69,9 @@ class Cycle:
 
     def __len__(self) -> int:
         return len(self.elements)
+
+    def __contains__(self, element: int) -> bool:
+        return element in self.elements
+
 
         
