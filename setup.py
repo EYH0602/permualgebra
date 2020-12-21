@@ -11,7 +11,7 @@ setuptools.setup(
     description="Calculate the permutations with Python.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/EYH0602/permualgbra",
+    url="https://github.com/EYH0602/permualgebra",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
