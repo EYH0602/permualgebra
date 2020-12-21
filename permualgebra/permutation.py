@@ -1,4 +1,5 @@
 import sys
+import copy as copy
 from .cycle import Cycle
 
 class Permutation:
@@ -41,8 +42,32 @@ class Permutation:
 
         # finished calculating the result
         return res
+
+    def simplify(self):
+        """
+        simply this Permutation itself
+        """
+        S = self.getSet()
+        newList = []
+        while S:                # while S is not empty, keep goinf
+            currElement = S.pop(0)  # front of queue
+            currRes = [currElement]
+            while True:
+                for cycle in reversed(self.cycles): # we traverse a permutation cycle notation from left to right, so stack
+                    if currElement not in cycle:
+                        continue
+                    currElement = cycle.map(currElement)
+                if currElement not in currRes:
+                    S.remove(currElement)
+                    currRes.append(currElement)
+                else:
+                    break
+            newList.append(Cycle(currRes))
+
+        # finished calculating the result
+        self.cycles = newList
  
-    def TeX(self, type="math") -> str:
+    def TeX(self, type="default") -> str:
         """
         Give the TeX(LaTeX) format in three ways:
             1. text
@@ -51,7 +76,7 @@ class Permutation:
             2. math
                 $$ (1\:2\:3)(4\:5\:6) $$
                 can be inserted into a math environment without using \text{}
-            3. normal
+            3. default
                 (1 2 3)
                 if inserted into math environment, there will be no space inbetween.
         """
@@ -90,4 +115,12 @@ class Permutation:
 
     def __len__(self) -> int:
         return len(self.cycles)
+
+    def __mul__(self, otherPerm):
+        res = copy.deepcopy(self)
+        for cycle in otherPerm.cycles:
+            res.append(cycle)
+        return res
+
+
  

@@ -27,6 +27,9 @@ class Cycle:
             exit(-1)
 
     def map(self, elementIn: int):
+        """
+        map an element to another
+        """
         if elementIn not in self.elements:
             return "N/A"
         
@@ -52,7 +55,7 @@ class Cycle:
     def getHighest(self) -> int:
         return max(self.elements)
 
-    def TeX(self, type = "math") -> str:
+    def TeX(self, type = "defualt") -> str:
         if len(self) == 0 or len(self) == 1:
             return ""
 
@@ -62,7 +65,7 @@ class Cycle:
         elif type == "math":
             TeX = "("
             for element in self.elements:
-                TeX += str(element) + "\:"
+                TeX += str(element) + "\\:"
             TeX = TeX[:-2]
             TeX += ")"
         else:
