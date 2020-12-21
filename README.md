@@ -4,6 +4,10 @@ This package allows user to do permutations calculation in terms of Modern Algeb
 
 ## Install
 
+```bash
+pip install permualgebra
+```
+
 ## Permutation
 
 ### Definition
